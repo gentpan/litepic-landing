@@ -15,7 +15,10 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['-apple-system', 'BlinkMacSystemFont', 'PingFang SC', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        // Ubuntu first for Latin, then PingFang SC / system CJK so
+        // Chinese characters render natively (Ubuntu woff2 has no CJK
+        // glyphs). The @font-face declarations live in app/layout.tsx.
+        sans: ['Ubuntu', '-apple-system', 'BlinkMacSystemFont', 'PingFang SC', 'Helvetica Neue', 'Arial', 'sans-serif'],
         mono: ['ui-monospace', 'SFMono-Regular', 'SF Mono', 'Menlo', 'monospace'],
       },
       borderRadius: {

@@ -17,11 +17,14 @@
 html, body {
   background: var(--color-bg);
   color: var(--color-text);
-  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+  /* Ubuntu first so all Latin text uses our brand font; PingFang SC
+     after Ubuntu so Chinese characters fall through to the system CJK
+     font (Ubuntu woff2 has no CJK glyphs). */
+  font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
-/* LitePic wordmark — Ubuntu only for the logo text, not body. */
+/* LitePic wordmark — same family as body, just tighter tracking. */
 .font-brand {
   font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
   letter-spacing: -0.01em;
