@@ -16,6 +16,7 @@ const REPO_URL = 'https://github.com/gentpan/LitePic';
 const TOC = [
   { id: 'intro',              t: '项目简介' },
   { id: 'features',           t: '核心功能' },
+  { id: 'config-overview',    t: '可配置项' },
   { id: 'compression-modes',  t: '压缩方式选择' },
   { id: 'php-upload-limits',  t: 'PHP 上传限制' },
   { id: 'hotlink-protection', t: '开启防盗链' },
@@ -136,6 +137,69 @@ export default function DocsPage() {
                   <p className="text-[13px] text-slate-600 leading-relaxed m-0">{desc}</p>
                 </div>
               ))}
+            </div>
+          </section>
+
+          {/* 可配置项 */}
+          <section id="config-overview">
+            <h2>可配置项</h2>
+            <p>
+              下面是 LitePic 后台 <strong>设置</strong> 里的关键开关清单。这些设置都会写入 <code>.env</code> 文件 / SQLite 设置表，安装后随时可改。装好后进入 <strong>设置 → 服务器信息</strong> 可以看到当前实际生效的值。
+            </p>
+            <table>
+              <tbody>
+                <tr>
+                  <th>自动压缩</th>
+                  <td>上传后自动执行压缩（仅 JPG/JPEG/PNG）。压缩后端在「压缩方式」里三选一。</td>
+                </tr>
+                <tr>
+                  <th>自动转 WebP</th>
+                  <td>上传后自动转换为 WebP。需要 PHP GD 启用 <code>imagewebp()</code>。</td>
+                </tr>
+                <tr>
+                  <th>自动转 AVIF</th>
+                  <td>上传后自动转换为 AVIF。需要 PHP 8.1+ 且 GD 启用 <code>imageavif()</code>。</td>
+                </tr>
+                <tr>
+                  <th>偏好格式</th>
+                  <td>图库批量按钮与自动转换链路的首选目标格式（WebP / AVIF）。</td>
+                </tr>
+                <tr>
+                  <th>保留原图</th>
+                  <td>格式转换成功后是否保留原始文件。关闭后只留最终文件，节省空间。</td>
+                </tr>
+                <tr>
+                  <th>EXIF 清理</th>
+                  <td>上传时自动剥离图片 EXIF 元数据（GPS、相机型号、缩略图等）。</td>
+                </tr>
+                <tr>
+                  <th>防盗链开关 + 允许域名</th>
+                  <td>开启后用 <code>Referer</code> 白名单拦截外站盗链。Apache 自动写 <code>.htaccess</code>，Nginx / Caddy 见 <a href="#hotlink-protection">开启防盗链</a>。</td>
+                </tr>
+                <tr>
+                  <th>水印开关 + 字体 / PNG 资源</th>
+                  <td>上传后自动加文字或 PNG 图片水印。详见 <a href="#watermark">水印设置</a>。</td>
+                </tr>
+                <tr>
+                  <th>最大上传大小</th>
+                  <td>系统 <code>MAX_FILE_SIZE</code> 与 <code>.user.ini</code> 同步写入；最终生效需配合 PHP / Nginx 的限制，详见 <a href="#php-upload-limits">PHP 上传限制</a>。</td>
+                </tr>
+                <tr>
+                  <th>允许上传格式</th>
+                  <td>用户可在后台增删允许的扩展名，上传页会自动同步显示可用格式。</td>
+                </tr>
+                <tr>
+                  <th>R2 / S3 远程存储</th>
+                  <td>支持「远程备份」（保留本站链接）和「云端存储」（链接走公网域名）两种模式。</td>
+                </tr>
+                <tr>
+                  <th>登录方式</th>
+                  <td>API Key + Passkey 双轨，详见 <a href="#auth">认证与安全</a>。</td>
+                </tr>
+              </tbody>
+            </table>
+            <div className="docs-note">
+              <strong>检查实际生效值：</strong>装好 LitePic 之后，进入 <strong>设置 → 服务器信息</strong> 可以看到 PHP 版本、GD 扩展、AVIF 支持、当前 Web 服务器、上传上限、防盗链白名单等运行时状态，方便排查环境差异。
             </div>
           </section>
 
