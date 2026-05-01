@@ -87,10 +87,12 @@ html, body {
   display: grid;
   grid-template-columns: 1fr min(100%, 72rem) 1fr;
   column-gap: 24px;
-  padding: 56px 20px 0;
+  /* Bottom padding here (not margin on footer) so the dark footer
+     sits flush against the page, no light strip in between. */
+  padding: 56px 20px 64px;
 }
 @media (min-width: 640px) {
-  .docs-page-grid { padding: 64px 32px 0; }
+  .docs-page-grid { padding: 64px 32px 80px; }
 }
 
 /* TOC: hidden on screens too narrow to fit it outside the content,

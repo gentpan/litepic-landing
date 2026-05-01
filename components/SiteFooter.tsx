@@ -9,7 +9,11 @@ const REPO_URL = 'https://github.com/gentpan/LitePic';
  */
 export default function SiteFooter() {
   return (
-    <footer className="bg-slate-900 border-t border-slate-800 px-5 sm:px-8 py-10 mt-16">
+    {/* No mt-* here — when the page above is dark (e.g. landing's CTA
+        bg-slate-900), any margin would render the light page bg behind
+        it and look like an unwanted white strip between the two dark
+        regions. Each page manages its own bottom spacing instead. */}
+    <footer className="bg-slate-900 border-t border-slate-800 px-5 sm:px-8 py-10">
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
         <div className="flex items-center gap-2.5">
           <Logo className="w-6 h-6" />
