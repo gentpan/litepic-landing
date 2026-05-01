@@ -24,13 +24,14 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* LitePic wordmark — same family as body, just tighter tracking. */
 .font-brand {
   font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
   letter-spacing: -0.01em;
 }
 
-/* Changelog release-body rendering (simple markdown-ish). */
+/* ============================================================
+   Changelog release-body rendering (simple markdown-ish).
+   ============================================================ */
 .changelog-body h2, .changelog-body h3, .changelog-body h4, .changelog-body h5 {
   font-size: 14px;
   font-weight: 600;
@@ -68,103 +69,360 @@ html, body {
 }
 .changelog-body a { color: var(--color-primary); text-decoration: underline; }
 
-/* Docs page — long-form prose with sidebar TOC, code blocks, tables. */
-.docs-prose h2 {
-  font-size: 22px;
-  font-weight: 700;
-  color: #0f172a;
-  margin: 40px 0 14px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #e2e8f0;
-  scroll-margin-top: 80px;
+/* ============================================================
+   Docs page — card-based layout that mirrors the LitePic admin
+   /docs page (originally usage.php + assets/css/components/docs.css).
+   Brand-blue section headings, primary-tinted notes and inline code,
+   dark code blocks with title bars, tutorial cards with rounded
+   icon badges. Stays consistent with the self-hosted dashboard so
+   the marketing-site docs read like the admin docs.
+   ============================================================ */
+
+.docs-layout {
+  display: grid;
+  gap: 14px;
 }
-.docs-prose h2:first-child { margin-top: 0; }
-.docs-prose h3 {
-  font-size: 16px;
+
+/* --- Cards --- */
+.docs-card {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  padding: 18px 20px;
+  transition: box-shadow 200ms ease, transform 200ms ease;
+}
+.docs-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -10px rgba(15, 23, 42, 0.12);
+}
+.docs-card-featured {
+  background: color-mix(in srgb, #ffffff 94%, var(--color-primary) 6%);
+}
+.docs-card h3 {
+  margin: 0 0 12px;
+  font-size: 15px;
   font-weight: 600;
-  color: #0f172a;
-  margin: 24px 0 10px;
+  color: var(--color-primary);
   scroll-margin-top: 80px;
 }
-.docs-prose h4 {
+.docs-card h4 {
+  margin: 0 0 6px;
   font-size: 14px;
   font-weight: 600;
-  color: #0f172a;
-  margin: 18px 0 8px;
+  color: var(--color-text);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
-.docs-prose p {
+.docs-card p {
+  margin: 0;
+  color: var(--color-text-dim);
+  font-size: 14px;
+  line-height: 1.78;
+}
+.docs-card p + p { margin-top: 8px; }
+.docs-card strong { color: var(--color-text); font-weight: 600; }
+.docs-card a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+.docs-card a:hover { text-decoration: underline; }
+
+.docs-card > :where(.docs-grid, .docs-list, .docs-steps, .docs-table, .docs-code-block, .docs-tutorial-list) {
+  margin-top: 12px;
+}
+.docs-card > p + :where(.docs-grid, .docs-list, .docs-steps, .docs-table, .docs-code-block, .docs-tutorial-list),
+.docs-card > :where(.docs-grid, .docs-list, .docs-steps, .docs-table, .docs-code-block, .docs-tutorial-list) + p {
+  margin-top: 16px;
+}
+
+/* --- Grid sub-items inside cards (used for "核心功能") --- */
+.docs-grid {
+  display: grid;
+  gap: 10px;
+}
+.docs-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.docs-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+.docs-item {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  padding: 12px 14px;
+}
+.docs-item h4 {
+  margin: 0 0 4px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--color-text);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.docs-item h4 i { color: var(--color-primary); }
+.docs-item p {
+  margin: 0;
+  color: var(--color-text-dim);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* --- Tutorial cards (with prominent rounded icon badges) --- */
+.docs-tutorial-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+.docs-tutorial-card {
+  display: grid;
+  gap: 12px;
+  align-items: start;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  padding: 16px 18px;
+  box-shadow: 0 16px 34px -22px rgba(15, 23, 42, 0.12);
+}
+.docs-tutorial-card h4 {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
   font-size: 14.5px;
-  line-height: 1.75;
-  color: #334155;
-  margin: 10px 0;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.25;
 }
-.docs-prose ol, .docs-prose ul {
-  font-size: 14.5px;
-  line-height: 1.75;
-  color: #334155;
-  padding-left: 24px;
-  margin: 10px 0;
+.docs-tutorial-card h4 i {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  background: color-mix(in srgb, var(--color-primary) 10%, #fff 90%);
+  color: var(--color-primary);
+  font-size: 15px;
 }
-.docs-prose ol { list-style: decimal; }
-.docs-prose ul { list-style: disc; }
-.docs-prose li { margin: 4px 0; }
-.docs-prose strong { color: #0f172a; font-weight: 600; }
-.docs-prose code {
+.docs-tutorial-card > p {
+  margin: 0;
+  color: var(--color-text-dim);
+  font-size: 13.5px;
+  line-height: 1.72;
+}
+
+/* --- Lists with hover-bullet --- */
+.docs-list,
+.docs-steps {
+  margin: 0;
+  padding-left: 0;
+  display: grid;
+  gap: 4px;
+  color: var(--color-text-dim);
+  font-size: 14px;
+  list-style: none;
+}
+.docs-list li,
+.docs-steps li {
+  position: relative;
+  padding-left: 18px;
+  line-height: 1.78;
+}
+.docs-list li::before,
+.docs-steps li::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 0.78em;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-text-muted) 70%, transparent);
+  transition: background 160ms ease, box-shadow 160ms ease;
+}
+.docs-list li:hover::before,
+.docs-steps li:hover::before {
+  background: var(--color-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 12%, transparent);
+}
+
+/* --- Notes (primary-tinted callout) --- */
+.docs-note {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border: 1px solid color-mix(in srgb, var(--color-primary) 22%, var(--color-border) 78%);
+  background: color-mix(in srgb, var(--color-primary) 7%, #fff 93%);
+  color: color-mix(in srgb, var(--color-text) 76%, var(--color-primary) 24%);
+  font-size: 13.5px;
+  line-height: 1.75;
+}
+.docs-note strong { color: var(--color-text); }
+.docs-code-block + .docs-note,
+.docs-note + .docs-code-block { margin-top: 16px; }
+
+/* --- Tables --- */
+.docs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  line-height: 1.62;
+}
+.docs-table th,
+.docs-table td {
+  border: 1px solid var(--color-border);
+  padding: 8px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+.docs-table th {
+  width: 22%;
+  font-weight: 600;
+  color: var(--color-text);
+  background: color-mix(in srgb, #fff 92%, #000 8%);
+}
+
+/* --- Inline code (primary-tinted, matches LitePic admin) --- */
+.docs-card p code,
+.docs-card li code,
+.docs-card td code,
+.docs-card th code {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  font-size: 0.9em;
+  line-height: 1.35;
+  color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 10%, #fff 90%);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 22%, var(--color-border) 78%);
+  padding: 1px 5px;
+}
+
+/* --- Code blocks (dark with title bar + copy button) --- */
+.docs-code-block {
+  margin-top: 10px;
+  border: 1px solid #181818;
+  background: #181818;
+  overflow: hidden;
+}
+.docs-code-title {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px 0 16px;
+  gap: 10px;
+  border-bottom: 1px solid #303030;
+  background: #222;
+  color: #9fb3cf;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  font-size: 12px;
+}
+.docs-code-title-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.docs-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 30px;
+  width: 30px;
+  height: 22px;
+  border: 1px solid rgba(159, 179, 207, 0.24);
+  background: rgba(255, 255, 255, 0.04);
+  color: #9fb3cf;
+  cursor: pointer;
+  font-size: 12px;
+  transition: border-color 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+}
+.docs-copy-btn:hover {
+  border-color: rgba(96, 165, 250, 0.52);
+  background: rgba(96, 165, 250, 0.12);
+  color: #dbe8ff;
+}
+.docs-copy-btn.is-copied {
+  border-color: rgba(34, 197, 94, 0.58);
+  background: rgba(34, 197, 94, 0.16);
+  color: #22c55e;
+}
+pre.docs-code {
+  margin: 0;
+  padding: 12px 16px;
+  background: #181818;
+  color: #dbe8ff;
+  overflow-x: auto;
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
   font-size: 12.5px;
-  background: #f1f5f9;
-  border: 1px solid #e2e8f0;
-  padding: 1px 6px;
-  color: #0f172a;
-}
-.docs-prose pre {
-  margin: 12px 0 18px;
-  padding: 14px 16px;
-  background: #0f172a;
-  color: #e2e8f0;
-  border: 1px solid #0f172a;
-  overflow-x: auto;
-  font-size: 12.5px;
   line-height: 1.6;
+  white-space: pre;
+  border: none;
+  box-shadow: none;
 }
-.docs-prose pre code {
+pre.docs-code code {
   background: transparent;
   border: none;
   padding: 0;
   color: inherit;
   font-size: inherit;
+  font-family: inherit;
 }
-.docs-prose a { color: var(--color-primary); text-decoration: underline; }
-.docs-prose table {
-  width: 100%;
-  margin: 14px 0;
-  border: 1px solid #e2e8f0;
-  font-size: 13.5px;
+
+/* --- Issue / "found a bug?" box --- */
+.docs-issue-box {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border: 1px solid color-mix(in srgb, var(--color-primary) 20%, var(--color-border) 80%);
+  background: color-mix(in srgb, var(--color-primary) 5%, #fff 95%);
 }
-.docs-prose th, .docs-prose td {
-  text-align: left;
-  padding: 10px 14px;
-  border-bottom: 1px solid #e2e8f0;
-  vertical-align: top;
+.docs-issue-box > i {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  background: color-mix(in srgb, var(--color-primary) 10%, #fff 90%);
+  color: var(--color-primary);
+  font-size: 16px;
 }
-.docs-prose th {
-  background: #f8fafc;
-  font-weight: 600;
-  color: #0f172a;
-  width: 30%;
-  white-space: nowrap;
-}
-.docs-prose tr:last-child td, .docs-prose tr:last-child th { border-bottom: none; }
-.docs-prose .docs-note {
-  margin: 16px 0;
-  padding: 12px 16px;
-  background: #f8fafc;
-  border-left: 3px solid var(--color-primary);
+.docs-issue-box > div { flex: 1; min-width: 0; }
+.docs-issue-box strong {
+  display: block;
+  color: var(--color-text);
   font-size: 14px;
-  color: #334155;
-  line-height: 1.7;
+  font-weight: 600;
 }
-.docs-prose .docs-note strong { color: #0f172a; }
+.docs-issue-box p {
+  margin: 4px 0 0;
+  color: var(--color-text-dim);
+  font-size: 13px;
+  line-height: 1.65;
+}
+.docs-issue-box a {
+  margin-left: auto;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: 0 14px;
+  border: 1px solid color-mix(in srgb, var(--color-primary) 26%, var(--color-border) 74%);
+  background: color-mix(in srgb, var(--color-primary) 8%, #fff 92%);
+  color: var(--color-primary);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+.docs-issue-box a:hover {
+  color: #fff;
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* Mobile — single-column grids */
+@media (max-width: 900px) {
+  .docs-grid-2,
+  .docs-grid-3 { grid-template-columns: 1fr; }
+}
 
 *, *::before, *::after { box-sizing: border-box; }
 
