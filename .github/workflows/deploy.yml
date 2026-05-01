@@ -13,11 +13,12 @@ on:
   # immediately. Optional — we also have the daily safety net below.
   repository_dispatch:
     types: [litepic-released]
-  # Belt-and-braces fallback: rebuild every day at 03:30 UTC even
-  # without a triggering event, so a stale build never lingers more
-  # than 24h if cross-repo dispatch fails.
+  # Belt-and-braces fallback: rebuild every 6 hours at :30 (03:30 /
+  # 09:30 / 15:30 / 21:30 UTC). Without a triggering event, a stale
+  # build never lingers more than 6h — gives changelog page from the
+  # GitHub releases API a max-6h freshness SLA.
   schedule:
-    - cron: '30 3 * * *'
+    - cron: '30 */6 * * *'
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
