@@ -50,7 +50,7 @@ npm run build
 |---|---|
 | `LITEPIC_DEPLOY_SSH_KEY` | 部署服务器 SSH 私钥（同 utterlog-landing 共用 `~/.ssh/gentpan.pem`） |
 | `LITEPIC_DEPLOY_HOST` | `136.243.151.32` |
-| `LITEPIC_DEPLOY_PATH` | `/opt/1panel/www/sites/litepic.io` |
+| `LITEPIC_DEPLOY_PATH` | `/opt/1panel/www/sites/litepic.io/index` |
 
 部署流程：
 
@@ -65,8 +65,9 @@ npm run build
 - **源服务器**：136.243.151.32（giantaccel.com，Hetzner）
 - **Web 层**：1Panel + OpenResty Docker 容器（`1Panel-openresty-7ux1`）
 - **SSL**：Cloudflare Origin Cert，15 年有效期，挂在 `/usr/local/openresty/nginx/conf/ssl/litepic.io/`
-- **静态根**：宿主机 `/opt/1panel/www/sites/litepic.io/`，容器内 `/www/sites/litepic.io/`
+- **静态根**：宿主机 `/opt/1panel/www/sites/litepic.io/index/`（1Panel 静态站约定的 `/index` 子目录），容器内 `/www/sites/litepic.io/index`
 - **OpenResty 配置**：`/opt/1panel/www/conf.d/litepic.io.conf`
+- **1Panel 注册**：站点已登记到 `agent.db`（`websites.id=28`，`website_ssls.id=26`），可在面板 UI 看到
 
 ## 与主程序仓库的关系
 
