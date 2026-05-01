@@ -8,11 +8,13 @@ const REPO_URL = 'https://github.com/gentpan/LitePic';
  * the three pages always carry identical chrome.
  */
 export default function SiteFooter() {
+  // Note: no mt-* on the footer. When the page above is dark
+  // (e.g. landing's CTA bg-slate-900), any margin would render the
+  // light page bg behind it and look like an unwanted white strip
+  // between the two dark regions. Each page manages its own bottom
+  // spacing instead (docs grid pads its own bottom, changelog has
+  // py-16 on its section, homepage CTA has py-24).
   return (
-    {/* No mt-* here — when the page above is dark (e.g. landing's CTA
-        bg-slate-900), any margin would render the light page bg behind
-        it and look like an unwanted white strip between the two dark
-        regions. Each page manages its own bottom spacing instead. */}
     <footer className="bg-slate-900 border-t border-slate-800 px-5 sm:px-8 py-10">
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
         <div className="flex items-center gap-2.5">
