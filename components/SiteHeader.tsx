@@ -9,9 +9,10 @@ interface SiteHeaderProps {
    * gets the bold/dark active state instead of the muted default.
    * - 'home'      → 特性 anchor highlighted (page-internal scroll)
    * - 'docs'      → /docs link bold
+   * - 'api'       → /api link bold
    * - 'changelog' → /changelog link bold
    */
-  current?: 'home' | 'docs' | 'changelog';
+  current?: 'home' | 'docs' | 'api' | 'changelog';
 }
 
 /**
@@ -42,6 +43,7 @@ export default function SiteHeader({ current = 'home' }: SiteHeaderProps) {
         <nav className="flex items-center gap-1 sm:gap-2 text-[13.5px]">
           <a href="/#features" className={link(false)}>特性</a>
           <a href="/docs"      className={link(current === 'docs')}>文档</a>
+          <a href="/api"       className={link(current === 'api')}>API</a>
           <a href="/changelog" className={link(current === 'changelog')}>更新</a>
           <a
             href={REPO_URL}

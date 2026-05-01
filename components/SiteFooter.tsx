@@ -27,6 +27,7 @@ export default function SiteFooter() {
         </div>
         <nav className="flex flex-wrap gap-x-5 gap-y-2 text-[13px] text-slate-400">
           <a href="/docs" className="hover:text-white">文档</a>
+          <a href="/api" className="hover:text-white">API</a>
           <a href="/changelog" className="hover:text-white">更新</a>
           <a
             href={REPO_URL}

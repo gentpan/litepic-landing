@@ -431,10 +431,10 @@ avifenc --version`} />
             <section className="docs-card" id="api">
               <h3>接口与外部接入</h3>
               <p>
-                上传接口、导出接口、后台图片操作接口和 WordPress 插件对接说明在你自己的实例后台 <code>/api</code> 页面查看 — API 文档基于运行时配置生成，所以放在自托管站点本地，而不是 litepic.io。
+                上传接口、导出接口、后台图片操作接口和 WordPress 插件对接说明在 <a href="/api">litepic.io/api</a> 完整文档查看，包含 cURL 示例、JSON 响应字段说明和权限说明。
               </p>
               <p>
-                示例：管理员后台访问 <code>https://your-site.com/api</code>，包含基础认证、curl 调用样例、响应字段说明和错误码表。
+                Token 在你自己的实例后台创建：登录 LitePic → 设置 → 接口 tab → 新建 API Token。Token 只在创建时显示一次。
               </p>
             </section>
 
