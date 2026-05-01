@@ -78,6 +78,44 @@ html, body {
    the marketing-site docs read like the admin docs.
    ============================================================ */
 
+/* Page grid — content stays centered at max-w-6xl (matches the
+   homepage feature/install sections), TOC lives in the left spacer
+   column so it sits OUTSIDE the content width on wide screens. The
+   middle column is `min(100%, 72rem)` so it's exactly max-w-6xl on
+   desktop and full-width on mobile. */
+.docs-page-grid {
+  display: grid;
+  grid-template-columns: 1fr min(100%, 72rem) 1fr;
+  column-gap: 24px;
+  padding: 56px 20px 0;
+}
+@media (min-width: 640px) {
+  .docs-page-grid { padding: 64px 32px 0; }
+}
+
+/* TOC: hidden on screens too narrow to fit it outside the content,
+   sticky-scrolling sidebar on xl+. justify-self:end sticks it to the
+   right edge of the left spacer column → visually it sits just left
+   of the content. */
+.docs-toc { display: none; }
+@media (min-width: 1280px) {
+  .docs-toc {
+    display: block;
+    grid-column: 1;
+    justify-self: end;
+    width: 180px;
+  }
+  .docs-toc-inner {
+    position: sticky;
+    top: 96px;
+    padding-right: 8px;
+  }
+}
+
+/* Content column — always max-w-6xl, full width on mobile. */
+.docs-content { grid-column: 2; min-width: 0; }
+.docs-spacer  { grid-column: 3; } /* keeps the grid symmetric */
+
 .docs-layout {
   display: grid;
   gap: 14px;
@@ -89,6 +127,10 @@ html, body {
   background: var(--color-surface);
   padding: 18px 20px;
   transition: box-shadow 200ms ease, transform 200ms ease;
+  /* Anchor target: each <section className="docs-card" id="..."> is
+     what TOC links scroll to. Header is sticky h-16 (64px), so 96px
+     leaves a small gap below the header when a section lands. */
+  scroll-margin-top: 96px;
 }
 .docs-card:hover {
   transform: translateY(-2px);
@@ -102,7 +144,6 @@ html, body {
   font-size: 15px;
   font-weight: 600;
   color: var(--color-primary);
-  scroll-margin-top: 80px;
 }
 .docs-card h4 {
   margin: 0 0 6px;

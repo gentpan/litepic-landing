@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Logo from '@/components/Logo';
 
 interface HomeClientProps {
   /** Hero badge label, e.g. "v3.0.0 · 2026-04-29". Sourced from
@@ -12,19 +13,6 @@ interface HomeClientProps {
 const REPO_URL = 'https://github.com/gentpan/LitePic';
 const ZIP_URL  = 'https://github.com/gentpan/LitePic/archive/refs/heads/main.zip';
 const RELEASES_URL = 'https://github.com/gentpan/LitePic/releases';
-
-function Logo({ className = '' }: { className?: string }) {
-  // LitePic mark — minimalist "LP" inside a soft-corner square.
-  // Using the brand blue #0052D9 for the fill so it matches the rest
-  // of the design system.
-  return (
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden>
-      <rect x="0" y="0" width="24" height="24" rx="4" fill="#0052D9" />
-      <path d="M6.4 6.5h2.3v8.7h4.4v2.1H6.4V6.5z" fill="white" />
-      <circle cx="16.6" cy="8.7" r="1.7" fill="white" />
-    </svg>
-  );
-}
 
 function CopyableCommand({ cmd, label }: { cmd: string; label?: string }) {
   const [copied, setCopied] = useState(false);
@@ -80,30 +68,18 @@ function FeatureCard({
   );
 }
 
+// Note: SiteHeader/SiteFooter live in /components and are server
+// components, but they import fine into this 'use client' file —
+// Next.js downgrades them to be client-rendered alongside this tree
+// without losing static export. Single source of nav/footer chrome
+// across home / docs / changelog so any nav tweak only happens once.
+import SiteHeader from '@/components/SiteHeader';
+import SiteFooter from '@/components/SiteFooter';
+
 export default function LandingPage({ heroBadge }: HomeClientProps) {
   return (
     <main className="min-h-screen bg-slate-50">
-      {/* ===== Nav ===== */}
-      <header className="border-b border-slate-200 bg-white sticky top-0 z-20 backdrop-blur supports-[backdrop-filter]:bg-white/90">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
-          <a href="/" className="flex items-center gap-2.5">
-            <Logo className="w-7 h-7" />
-            <span className="font-brand font-semibold text-slate-900">LitePic</span>
-          </a>
-          <nav className="flex items-center gap-1 sm:gap-2 text-[13.5px]">
-            <a href="#features" className="hidden sm:inline px-3 py-2 text-slate-600 hover:text-slate-900">特性</a>
-            <a href="/docs" className="hidden sm:inline px-3 py-2 text-slate-600 hover:text-slate-900">文档</a>
-            <a href="/changelog" className="hidden sm:inline px-3 py-2 text-slate-600 hover:text-slate-900">更新</a>
-            <a href={REPO_URL} target="_blank" rel="noopener" className="px-3 py-2 text-slate-600 hover:text-slate-900 flex items-center gap-1.5">
-              <i className="fa-brands fa-github" />
-              <span className="hidden sm:inline">GitHub</span>
-            </a>
-            <a href={ZIP_URL} className="ml-1 px-4 py-2 bg-brand text-white hover:bg-brand-hover transition-colors font-medium">
-              下载
-            </a>
-          </nav>
-        </div>
-      </header>
+      <SiteHeader current="home" />
 
       {/* ===== Hero ===== */}
       <section id="top" className="px-5 sm:px-8 pt-20 pb-24 sm:pt-28 sm:pb-32">
@@ -356,31 +332,7 @@ export default function LandingPage({ heroBadge }: HomeClientProps) {
         </div>
       </section>
 
-      {/* ===== Footer ===== */}
-      <footer className="bg-slate-900 border-t border-slate-800 px-5 sm:px-8 py-10">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <div className="flex items-center gap-2.5">
-            <Logo className="w-6 h-6" />
-            <span className="text-slate-400 text-sm">
-              <span className="text-slate-200 font-medium font-brand">LitePic</span>
-              <span className="mx-2 text-slate-600">·</span>
-              轻量自托管 PHP 图床
-            </span>
-          </div>
-          <nav className="flex flex-wrap gap-x-5 gap-y-2 text-[13px] text-slate-400">
-            <a href="/docs" className="hover:text-white">文档</a>
-            <a href="/changelog" className="hover:text-white">更新</a>
-            <a href={REPO_URL} target="_blank" rel="noopener" className="hover:text-white flex items-center gap-1.5">
-              <i className="fa-brands fa-github" /> GitHub
-            </a>
-            <a href={`${REPO_URL}/issues`} target="_blank" rel="noopener" className="hover:text-white">Issues</a>
-            <a href={`${REPO_URL}/blob/main/LICENSE`} target="_blank" rel="noopener" className="hover:text-white">MIT</a>
-          </nav>
-        </div>
-        <div className="max-w-6xl mx-auto mt-8 pt-6 border-t border-slate-800 text-[11px] text-slate-600 font-mono">
-          © {new Date().getFullYear()} LitePic Project. Self-hosted, open source, MIT licensed.
-        </div>
-      </footer>
+      <SiteFooter />
     </main>
   );
 }

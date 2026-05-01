@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import SiteHeader from '@/components/SiteHeader';
+import SiteFooter from '@/components/SiteFooter';
 import CodeBlock from './CodeBlock';
 
 export const metadata: Metadata = {
@@ -10,8 +12,8 @@ export const metadata: Metadata = {
 const REPO_URL = 'https://github.com/gentpan/LitePic';
 
 // Sidebar TOC. Anchors live on the <section className="docs-card" id="...">
-// wrappers below — the existing settings.php links into /docs#hotlink-protection
-// etc. keep working. Keep this list in sync when sections change.
+// wrappers below — settings.php links into /docs#hotlink-protection etc.
+// keep working. Keep this list in sync when sections change.
 const TOC = [
   { id: 'intro',                 t: '项目简介' },
   { id: 'features',              t: '核心功能' },
@@ -29,69 +31,46 @@ const TOC = [
   { id: 'ops',                   t: '运维与排障' },
 ];
 
-function Logo({ className = '' }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} aria-hidden>
-      <rect x="0" y="0" width="24" height="24" rx="4" fill="#0052D9" />
-      <path d="M6.4 6.5h2.3v8.7h4.4v2.1H6.4V6.5z" fill="white" />
-      <circle cx="16.6" cy="8.7" r="1.7" fill="white" />
-    </svg>
-  );
-}
-
 export default function DocsPage() {
   return (
     <main className="min-h-screen bg-slate-50">
-      {/* ===== Nav (mirrors landing header) ===== */}
-      <header className="border-b border-slate-200 bg-white sticky top-0 z-20">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
-          <a href="/" className="flex items-center gap-2.5">
-            <Logo className="w-7 h-7" />
-            <span className="font-brand font-semibold text-slate-900">LitePic</span>
-          </a>
-          <nav className="flex items-center gap-1 sm:gap-2 text-[13.5px]">
-            <a href="/#features" className="hidden sm:inline px-3 py-2 text-slate-600 hover:text-slate-900">特性</a>
-            <a href="/docs" className="hidden sm:inline px-3 py-2 text-slate-900 font-medium">文档</a>
-            <a href="/changelog" className="hidden sm:inline px-3 py-2 text-slate-600 hover:text-slate-900">更新</a>
-            <a href={REPO_URL} target="_blank" rel="noopener" className="px-3 py-2 text-slate-600 hover:text-slate-900 flex items-center gap-1.5">
-              <i className="fa-brands fa-github" />
-              <span className="hidden sm:inline">GitHub</span>
-            </a>
-          </nav>
-        </div>
-      </header>
+      <SiteHeader current="docs" />
 
-      <div className="max-w-6xl mx-auto px-5 sm:px-8 py-12 sm:py-16 grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-10">
-        {/* ===== Sidebar TOC ===== */}
-        <aside className="lg:sticky lg:top-24 lg:self-start">
-          <div className="text-xs font-mono text-brand uppercase tracking-wider mb-4">使用说明</div>
-          <nav className="text-sm space-y-1.5">
-            {TOC.map((item) => (
+      {/* docs-page-grid: 3-col layout. Content centered at max-w-6xl
+          (col 2). TOC lives in col 1 → sits outside the content width
+          on xl+ screens, hidden on smaller. Spacer in col 3 keeps the
+          grid symmetric. */}
+      <div className="docs-page-grid">
+        <aside className="docs-toc" aria-label="目录">
+          <div className="docs-toc-inner">
+            <div className="text-xs font-mono text-brand uppercase tracking-wider mb-4">使用说明</div>
+            <nav className="text-sm space-y-1.5">
+              {TOC.map((item) => (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  className="block py-1 text-slate-600 hover:text-brand border-l-2 border-transparent hover:border-brand pl-3 -ml-px transition-colors"
+                >
+                  {item.t}
+                </a>
+              ))}
+            </nav>
+            <div className="mt-8 pt-6 border-t border-slate-200 text-[12px] text-slate-500">
               <a
-                key={item.id}
-                href={`#${item.id}`}
-                className="block py-1 text-slate-600 hover:text-brand border-l-2 border-transparent hover:border-brand pl-3 -ml-px transition-colors"
+                href={`${REPO_URL}/issues`}
+                target="_blank"
+                rel="noopener"
+                className="inline-flex items-center gap-1.5 hover:text-brand"
               >
-                {item.t}
+                <i className="fa-brands fa-github" />
+                发现问题？反馈
               </a>
-            ))}
-          </nav>
-          <div className="mt-8 pt-6 border-t border-slate-200 text-[12px] text-slate-500">
-            <a
-              href={`${REPO_URL}/issues`}
-              target="_blank"
-              rel="noopener"
-              className="inline-flex items-center gap-1.5 hover:text-brand"
-            >
-              <i className="fa-brands fa-github" />
-              发现问题？反馈
-            </a>
+            </div>
           </div>
         </aside>
 
-        {/* ===== Main content ===== */}
-        <div className="min-w-0">
-          {/* ===== Page header ===== */}
+        <article className="docs-content">
+          {/* Page header (inside content column so it lines up with cards) */}
           <header className="mb-8">
             <div className="text-xs font-mono text-brand uppercase tracking-wider mb-3">
               <i className="fa-solid fa-book-open mr-1.5" /> DOCUMENTATION
@@ -104,9 +83,7 @@ export default function DocsPage() {
             </p>
           </header>
 
-          {/* ===== Card stack ===== */}
           <div className="docs-layout">
-
             {/* 项目简介 */}
             <section className="docs-card docs-card-featured" id="intro">
               <h3>项目简介</h3>
@@ -484,18 +461,12 @@ avifenc --version`} />
               </a>
             </aside>
           </div>
-        </div>
+        </article>
+
+        <div className="docs-spacer" aria-hidden />
       </div>
 
-      <footer className="border-t border-slate-200 bg-white py-10 mt-16">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 text-center text-[12px] text-slate-500">
-          <a href="/" className="hover:text-slate-900">litepic.io</a>
-          <span className="mx-3 text-slate-300">&middot;</span>
-          <a href="/changelog" className="hover:text-slate-900">更新</a>
-          <span className="mx-3 text-slate-300">&middot;</span>
-          <a href={REPO_URL} className="hover:text-slate-900">GitHub</a>
-        </div>
-      </footer>
+      <SiteFooter />
     </main>
   );
 }
