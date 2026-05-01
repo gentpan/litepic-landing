@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #0052D9;
+  --color-primary-hover: #003DA6;
+  --color-primary-soft: #E6EEFB;
+  --color-text: #0f172a;
+  --color-text-dim: #475569;
+  --color-text-muted: #94a3b8;
+  --color-border: #e2e8f0;
+  --color-surface: #ffffff;
+  --color-bg: #f8fafc;
+}
+
+html, body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* LitePic wordmark — Ubuntu only for the logo text, not body. */
+.font-brand {
+  font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+  letter-spacing: -0.01em;
+}
+
+/* Changelog release-body rendering (simple markdown-ish). */
+.changelog-body h2, .changelog-body h3, .changelog-body h4, .changelog-body h5 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 16px 0 6px;
+}
+.changelog-body p { margin: 6px 0; }
+.changelog-body ul { margin: 8px 0 12px; padding-left: 22px; list-style: disc; }
+.changelog-body li { margin: 3px 0; }
+.changelog-body code {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  font-size: 12px;
+  background: #f1f5f9;
+  padding: 1px 5px;
+  border: 1px solid #e2e8f0;
+}
+.changelog-body pre {
+  margin: 10px 0 14px;
+  padding: 12px 14px;
+  background: #0f172a;
+  color: #e2e8f0;
+  border: 1px solid #0f172a;
+  overflow-x: auto;
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+.changelog-body pre code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  white-space: pre;
+}
+.changelog-body a { color: var(--color-primary); text-decoration: underline; }
+
+/* Docs page — long-form prose with sidebar TOC, code blocks, tables. */
+.docs-prose h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 40px 0 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e2e8f0;
+  scroll-margin-top: 80px;
+}
+.docs-prose h2:first-child { margin-top: 0; }
+.docs-prose h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 24px 0 10px;
+  scroll-margin-top: 80px;
+}
+.docs-prose h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 18px 0 8px;
+}
+.docs-prose p {
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: #334155;
+  margin: 10px 0;
+}
+.docs-prose ol, .docs-prose ul {
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: #334155;
+  padding-left: 24px;
+  margin: 10px 0;
+}
+.docs-prose ol { list-style: decimal; }
+.docs-prose ul { list-style: disc; }
+.docs-prose li { margin: 4px 0; }
+.docs-prose strong { color: #0f172a; font-weight: 600; }
+.docs-prose code {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  font-size: 12.5px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  padding: 1px 6px;
+  color: #0f172a;
+}
+.docs-prose pre {
+  margin: 12px 0 18px;
+  padding: 14px 16px;
+  background: #0f172a;
+  color: #e2e8f0;
+  border: 1px solid #0f172a;
+  overflow-x: auto;
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+.docs-prose pre code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+}
+.docs-prose a { color: var(--color-primary); text-decoration: underline; }
+.docs-prose table {
+  width: 100%;
+  margin: 14px 0;
+  border: 1px solid #e2e8f0;
+  font-size: 13.5px;
+}
+.docs-prose th, .docs-prose td {
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: top;
+}
+.docs-prose th {
+  background: #f8fafc;
+  font-weight: 600;
+  color: #0f172a;
+  width: 30%;
+  white-space: nowrap;
+}
+.docs-prose tr:last-child td, .docs-prose tr:last-child th { border-bottom: none; }
+.docs-prose .docs-note {
+  margin: 16px 0;
+  padding: 12px 16px;
+  background: #f8fafc;
+  border-left: 3px solid var(--color-primary);
+  font-size: 14px;
+  color: #334155;
+  line-height: 1.7;
+}
+.docs-prose .docs-note strong { color: #0f172a; }
+
+*, *::before, *::after { box-sizing: border-box; }
+
+::selection {
+  background: var(--color-primary);
+  color: #fff;
+}
